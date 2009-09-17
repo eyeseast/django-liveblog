@@ -7,7 +7,7 @@ def can_tweet():
         getattr(settings, 'TWITTER_USERNAME')
         getattr(settings, 'TWITTER_PASSWORD')
         getattr(settings, 'BITLY_API_KEY')
-        getattr(settings, 'BITLY_LOGIN')):
+        getattr(settings, 'BITLY_LOGIN')
     except AttributeError:
         return False
     
