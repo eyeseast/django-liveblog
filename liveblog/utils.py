@@ -1,7 +1,29 @@
 from django.template import Context
 from django.template.loader import get_template
 
-def dump_updates(qs, outfile_name, template='updates_dump.html'):
+def can_tweet():
+    from django.conf import settings
+    try:
+        getattr(settings, 'TWITTER_USERNAME')
+        getattr(settings, 'TWITTER_PASSWORD')
+        getattr(settings, 'BITLY_API_KEY')
+        getattr(settings, 'BITLY_LOGIN')):
+    except AttributeError:
+        return False
+    
+    try:
+        import twitter as twitter_api
+        import bitly as bitly_api
+        twitter = twitter_api.Api(username=settings.TWITTER_USERNAME, password=settings.TWITTER_PASSWORD)
+        bitly = bitly_api.Api(login=settings.BITLY_LOGIN, apikey=settings.BITLY_API_KEY)
+    except:
+        return False
+        
+    return True
+
+
+
+def dump_updates(qs, outfile_name, template='liveblog/updates_dump.html'):
     """
     Dump updates out into some kind of file,
     either plain text or HTML. It's up to you
