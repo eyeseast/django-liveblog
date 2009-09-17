@@ -1,0 +1,29 @@
+{% with entry.updates.all as updates %}
+{% if updates %}
+{% load order_queryset %}
+<div id="liveblog">
+	<p><strong>Updates:</strong>
+		{% ifequal liveblog_order '-timestamp' %}
+		<a href="{{ object.get_absolute_url }}?order=asc#liveblog">oldest first</a>
+		{% else %}
+		<strong>oldest first</strong>
+		{% endifequal %}
+		|
+		{% ifequal liveblog_order 'timestamp' %}
+		<a href="{{ object.get_absolute_url }}?order=desc#liveblog">newest first</a>
+		{% else %}
+		<strong>newest first</strong>
+		{% endifequal %}
+	</p>
+	<ul class="liveblog">
+		{% for update in updates|order_by:liveblog_order %}
+		<li id="update{{ update.id }}" class="update">
+			<strong>{{ update.timestamp|date:"P" }}</strong>
+			<a href="{{ update.get_absolute_url }}" class="permalink" title="Link to this update">#</a>
+			{{ update.body_html|safe }}
+		</li>
+		{% endfor %}
+	</ul>
+</div>
+{% endif %}
+{% endwith %}

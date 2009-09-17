@@ -1,0 +1,21 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<title>Updates</title>
+	</head>
+	<body>
+	<h1>Updates</h1>
+	{% regroup updates by blog_entry as entry_list %}
+	{% for entry in entry_list %}
+		<div>
+		<h2>{{ entry.grouper.title }}</h2>
+		{{ entry.grouper.text_html|safe }}
+		</div>
+		<div>
+		{% for update in entry.list %}
+		{{ update.body_html|safe }}
+		{% endfor %}
+		</div>
+	{% endfor %}
+	</body>
+</html>
